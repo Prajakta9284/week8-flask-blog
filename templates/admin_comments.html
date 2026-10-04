@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Comment Moderation</title>
+
+</head>
+
+<body>
+
+    <h1>Comment Moderation</h1>
+
+    <hr>
+
+    <a href="{{ url_for('home') }}">
+        Home
+    </a>
+
+    |
+
+    <a href="{{ url_for('posts') }}">
+        Posts
+    </a>
+
+    <hr>
+
+
+    {% if comments %}
+
+        {% for comment in comments %}
+
+            <h3>
+                {{ comment.author.username }}
+            </h3>
+
+            <p>
+                <strong>Post:</strong>
+                {{ comment.post.title }}
+            </p>
+
+            <p>
+                {{ comment.content }}
+            </p>
+
+            <p>
+                {{ comment.timestamp }}
+            </p>
+
+
+            <form
+                method="POST"
+                action="{{ url_for(
+                    'approve_comment',
+                    comment_id=comment.id
+                ) }}"
+            >
+
+                <button type="submit">
+                    Approve
+                </button>
+
+            </form>
+
+
+            <br>
+
+
+            <form
+                method="POST"
+                action="{{ url_for(
+                    'delete_comment',
+                    comment_id=comment.id
+                ) }}"
+            >
+
+                <button type="submit">
+                    Delete
+                </button>
+
+            </form>
+
+            <hr>
+
+        {% endfor %}
+
+    {% else %}
+
+        <p>
+            No comments waiting for approval.
+        </p>
+
+    {% endif %}
+
+</body>
+
+</html>

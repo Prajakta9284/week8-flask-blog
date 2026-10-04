@@ -1,0 +1,320 @@
+
+{% extends "base.html" %}
+
+
+{% block title %}
+
+    Create Post - Flask Blog
+
+{% endblock %}
+
+
+{% block content %}
+
+
+<div class="row justify-content-center">
+
+    <div class="col-lg-9">
+
+
+        <div class="card shadow-sm">
+
+            <div class="card-body p-4">
+
+
+                <h1 class="mb-4">
+
+                    Create New Post
+
+                </h1>
+
+
+                <form
+                    method="POST"
+                    enctype="multipart/form-data"
+                    onsubmit="saveContent()"
+                >
+
+
+                    <!-- =========================
+                         Title
+                    ========================= -->
+
+                    <div class="mb-3">
+
+                        <label
+                            for="title"
+                            class="form-label"
+                        >
+
+                            Post Title
+
+                        </label>
+
+
+                        <input
+                            type="text"
+                            id="title"
+                            name="title"
+                            class="form-control form-control-lg"
+                            placeholder="Enter post title"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- =========================
+                         Category
+                    ========================= -->
+
+                    <div class="mb-3">
+
+                        <label
+                            for="category"
+                            class="form-label"
+                        >
+
+                            Category
+
+                        </label>
+
+
+                        <select
+                            name="category"
+                            id="category"
+                            class="form-select"
+                        >
+
+                            <option value="">
+                                Select Category
+                            </option>
+
+                            <option value="Technology">
+                                Technology
+                            </option>
+
+                            <option value="Programming">
+                                Programming
+                            </option>
+
+                            <option value="Education">
+                                Education
+                            </option>
+
+                            <option value="Business">
+                                Business
+                            </option>
+
+                            <option value="Lifestyle">
+                                Lifestyle
+                            </option>
+
+                            <option value="Other">
+                                Other
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- =========================
+                         Tags
+                    ========================= -->
+
+                    <div class="mb-3">
+
+                        <label
+                            for="tags"
+                            class="form-label"
+                        >
+
+                            Tags
+
+                        </label>
+
+
+                        <input
+                            type="text"
+                            id="tags"
+                            name="tags"
+                            class="form-control"
+                            placeholder="Python, Flask, Web Development"
+                        >
+
+
+                        <div class="form-text">
+
+                            Separate multiple tags using commas.
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =========================
+                         Image
+                    ========================= -->
+
+                    <div class="mb-4">
+
+                        <label
+                            for="image"
+                            class="form-label"
+                        >
+
+                            Featured Image
+
+                        </label>
+
+
+                        <input
+                            type="file"
+                            id="image"
+                            name="image"
+                            class="form-control"
+                            accept=".jpg,.jpeg,.png,.gif,.webp"
+                        >
+
+
+                        <div class="form-text">
+
+                            Allowed formats:
+                            JPG, JPEG, PNG, GIF and WEBP.
+                            Maximum size: 5 MB.
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =========================
+                         Rich Text Editor
+                    ========================= -->
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+
+                            Post Content
+
+                        </label>
+
+
+                        <div
+                            id="editor"
+                            style="height: 350px;"
+                        ></div>
+
+                    </div>
+
+
+                    <!-- Hidden content field -->
+
+                    <input
+                        type="hidden"
+                        name="content"
+                        id="content"
+                    >
+
+
+                    <!-- =========================
+                         Buttons
+                    ========================= -->
+
+                    <div class="mt-4">
+
+                        <button
+                            type="submit"
+                            class="btn btn-success"
+                        >
+                            Publish Post
+                        </button>
+
+
+                        <a
+                            href="{{ url_for('posts') }}"
+                            class="btn btn-secondary"
+                        >
+                            Cancel
+                        </a>
+
+                    </div>
+
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     Quill CSS
+========================= -->
+
+<link
+    href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css"
+    rel="stylesheet"
+>
+
+
+<!-- =========================
+     Quill JavaScript
+========================= -->
+
+<script
+    src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js">
+</script>
+
+
+<script>
+
+    const quill = new Quill(
+        "#editor",
+        {
+            theme: "snow",
+
+            modules: {
+
+                toolbar: [
+                    ["bold", "italic", "underline"],
+                    [
+                        {
+                            "header": [1, 2, 3, false]
+                        }
+                    ],
+                    [
+                        {
+                            "list": "ordered"
+                        },
+                        {
+                            "list": "bullet"
+                        }
+                    ],
+                    ["link"],
+                    ["clean"]
+                ]
+
+            }
+
+        }
+    );
+
+
+    function saveContent() {
+
+        document.getElementById("content").value =
+            quill.root.innerHTML;
+
+    }
+
+</script>
+
+
+{% endblock %}
